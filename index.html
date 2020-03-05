@@ -193,6 +193,7 @@ let dataInit = [];
 let dataShuffled = [];
 let dataDisplayed = [];
 let dataCurrentValue = [];
+let timer = {}
 
 const DOMactions = document.getElementById("actions");
 const DOMbtnSTART = document.getElementById("start");
@@ -251,6 +252,7 @@ DOMbtnSTART.addEventListener("click", function(){
 // CHOICES
 Array.from(DOMchoices.querySelectorAll("button")).forEach( aChoiceBtn => {
 	aChoiceBtn.addEventListener('click', (e) => {
+		timer.start = Date.now();
 		e.preventDefault();
 		let choiceTarget = e.target.id;
 		// console.log(choiceTarget);
@@ -285,7 +287,11 @@ DOMbtnOK.addEventListener("click", function(){
   if ( dataShuffled.length > 0 ) {
     displayNext();
   } else {
-    console.log('stop');
+  	timer.stop = Date.now();
+  	var timeTotalSec = Math.round((timer.stop - timer.start)/1000);
+  	var timeMin = Math.floor(timeTotalSec / 60);
+  	var timeSec = timeTotalSec - timeMin*60;
+  	alert( timeMin + ' min  ' + timeSec + ' sec'  );
     // toggleDisplay();
 	DOMbtnOK.classList.add("hidden");
 	DOMbtnNOK.classList.add("hidden");
